@@ -1,564 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Overtime Tracker BD - Account & Data Deletion</title>
-
+    <title>Account Deletion - Overtime Tracker BD</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, "Noto Sans Bengali", sans-serif;
-            background: #f5f7fa;
-            color: #172033;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 760px;
-            margin: 0 auto;
-            padding: 24px 16px 50px;
-        }
-
-        .topbar {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 18px;
-        }
-
-        .language-switch {
-            display: flex;
-            background: white;
-            border: 1px solid #d9dee7;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .language-switch button {
-            border: 0;
-            background: transparent;
-            padding: 9px 16px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .language-switch button.active {
-            background: #172033;
-            color: white;
-        }
-
-        .card {
-            background: white;
-            border-radius: 18px;
-            padding: 30px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07);
-        }
-
-        .brand {
-            text-align: center;
-            margin-bottom: 28px;
-        }
-
-        .brand h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        .developer {
-            margin-top: 6px;
-            color: #657083;
-            font-size: 15px;
-        }
-
-        h2 {
-            font-size: 22px;
-            margin-top: 0;
-        }
-
-        h3 {
-            font-size: 17px;
-            margin-top: 26px;
-        }
-
-        p {
-            color: #4c5668;
-        }
-
-        .info-box {
-            background: #f5f7fa;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 20px 0;
-        }
-
-        ul {
-            padding-left: 22px;
-            color: #4c5668;
-        }
-
-        .form-section {
-            margin-top: 28px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            border: 1px solid #ccd3df;
-            border-radius: 10px;
-            padding: 13px 14px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color: #172033;
-        }
-
-        textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
-
-        .field {
-            margin-bottom: 20px;
-        }
-
-        .checkbox {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            margin: 20px 0;
-            font-weight: normal;
-        }
-
-        .checkbox input {
-            width: auto;
-            margin-top: 5px;
-        }
-
-        .button {
-            display: inline-block;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            background: #172033;
-            color: white;
-            border: 0;
-            border-radius: 10px;
-            padding: 14px 18px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            opacity: 0.9;
-        }
-
-        .contact {
-            text-align: center;
-            margin-top: 28px;
-            padding-top: 24px;
-            border-top: 1px solid #e2e6ed;
-        }
-
-        .contact a {
-            color: #172033;
-            font-weight: 700;
-            word-break: break-word;
-        }
-
-        .footer {
-            text-align: center;
-            color: #7a8494;
-            font-size: 13px;
-            margin-top: 24px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 14px 12px 35px;
-            }
-
-            .card {
-                padding: 22px 18px;
-                border-radius: 14px;
-            }
-
-            .brand h1 {
-                font-size: 24px;
-            }
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
+        .header { background: #ffffff; padding: 15px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .toggle-container { display: inline-flex; border-radius: 20px; overflow: hidden; border: 1px solid #ccc; }
+        .toggle-btn { padding: 8px 20px; border: none; cursor: pointer; background: #fff; font-weight: bold; font-size: 14px; transition: 0.3s; }
+        .toggle-btn.active { background: #1a2b4c; color: #fff; }
+        .container { max-width: 800px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        h1 { color: #1a2b4c; font-size: 22px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h2 { color: #1a2b4c; font-size: 18px; margin-top: 25px; }
+        a { color: #007bff; text-decoration: none; word-break: break-all; }
+        a:hover { text-decoration: underline; }
+        .steps { background: #f9f9f9; padding: 15px; border-left: 5px solid #1a2b4c; margin: 20px 0; border-radius: 4px; }
+        ul, ol { padding-left: 20px; }
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+        .footer { text-align: center; font-size: 12px; color: #777; margin-top: 20px; margin-bottom: 30px; }
     </style>
 </head>
-
 <body>
 
-<div class="container">
-
-    <div class="topbar">
-        <div class="language-switch">
-            <button id="bnBtn" onclick="setLanguage('bn')">বাংলা</button>
-            <button id="enBtn" onclick="setLanguage('en')">English</button>
+    <!-- Language Toggle Header -->
+    <div class="header">
+        <div class="toggle-container">
+            <button id="btn-bn" class="toggle-btn active" onclick="switchLang('bn')">বাংলা</button>
+            <button id="btn-en" class="toggle-btn" onclick="switchLang('en')">English</button>
         </div>
     </div>
 
-    <div class="card">
+    <div class="container">
+        
+        <!-- ================= BANGLA CONTENT ================= -->
+        <div id="content-bn" class="lang-content active">
+            <h1>অ্যাকাউন্ট ডিলিটের অনুরোধ</h1>
+            <h2>Overtime Tracker BD</h2>
+            <p><strong>ডেভেলপার:</strong> Tatisaki Labs</p>
 
-        <!-- BRAND -->
-        <div class="brand">
-            <h1>Overtime Tracker BD</h1>
-            <div class="developer">
-                <span data-bn="ডেভেলপার: Tatisaki Labs"
-                      data-en="Developer: Tatisaki Labs"></span>
-            </div>
-        </div>
+            <p>আপনি নিচের যেকোনো একটি উপায়ে <strong>Overtime Tracker BD</strong> অ্যাপ থেকে আপনার অ্যাকাউন্ট এবং সংশ্লিষ্ট সকল ডেটা মুছে ফেলার অনুরোধ করতে পারেন:</p>
 
-        <!-- BENGALI -->
-        <div id="bnContent" class="hidden">
-
-            <h2>অ্যাকাউন্ট ও ডেটা মুছে ফেলার অনুরোধ</h2>
-
-            <p>
-                আপনি যদি Overtime Tracker BD অ্যাপের আপনার অ্যাকাউন্ট
-                এবং সংশ্লিষ্ট ব্যক্তিগত ডেটা মুছে ফেলতে চান, তাহলে নিচের
-                নির্দেশনা অনুসরণ করে অনুরোধ পাঠাতে পারেন।
-            </p>
-
-            <div class="info-box">
-                <strong>Google Sign-In</strong>
-                <p>
-                    Overtime Tracker BD-তে অ্যাকাউন্টে প্রবেশ করার জন্য
-                    Google Sign-In ব্যবহার করা হয়। তাই deletion request
-                    করার সময় অ্যাপের সঙ্গে ব্যবহৃত Google Account-এর
-                    ইমেইল ঠিকানা প্রদান করুন।
-                </p>
+            <div class="steps">
+                <h3>পদ্ধতি ১: অ্যাপের ভেতর থেকে ডিলিট</h3>
+                <ol>
+                    <li>Overtime Tracker BD অ্যাপটি ওপেন করুন।</li>
+                    <li>আপনার <strong>প্রোফাইল</strong> সেকশনে যান।</li>
+                    <li>উপরের ডানদিকে থাকা <strong>সেটিংস</strong> (গিয়ার আইকন) এ ট্যাপ করুন।</li>
+                    <li><strong>"Delete Account"</strong> অপশনটি সিলেক্ট করুন।</li>
+                    <li>ডিলিট করার বিষয়টি কনফার্ম করুন।</li>
+                </ol>
             </div>
 
-            <h3>কী ধরনের ডেটা মুছে ফেলা হতে পারে?</h3>
+            <div class="steps">
+                <h3>পদ্ধতি ২: ইমেইলের মাধ্যমে অনুরোধ</h3>
+                <p>অ্যাপে প্রবেশ করতে না পারলে, আপনি ইমেইল করে ডিলিটের অনুরোধ করতে পারেন:</p>
+                <ul>
+                    <li>ইমেইল: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></li>
+                </ul>
+                <p>ইমেইলের সাবজেক্টে "Account Deletion Request" লিখুন এবং আপনার অ্যাকাউন্টের ইমেইলটি উল্লেখ করুন।</p>
+            </div>
 
+            <h3>কি কি ডেটা মুছে ফেলা হবে?</h3>
             <ul>
-                <li>অ্যাকাউন্ট ও প্রোফাইল সংক্রান্ত তথ্য</li>
-                <li>Attendance ও কাজের রেকর্ড</li>
-                <li>Overtime রেকর্ড</li>
-                <li>Salary ও earnings সংক্রান্ত তথ্য</li>
-                <li>অন্যান্য সংশ্লিষ্ট ব্যক্তিগত ডেটা</li>
+                <li>আপনার নাম, ইমেইল এবং গুগল অ্যাকাউন্টের তথ্য।</li>
+                <li>কোম্পানি/ফ্যাক্টরির নাম, আইডি, গ্রেড এবং পদবি।</li>
+                <li>মূল বেতন, ভাতা এবং বোনাসের মতো সকল আর্থিক তথ্য।</li>
+                <li>ওভারটাইম রেকর্ড, পিস রেট এবং কাজের ইতিহাস।</li>
             </ul>
 
-            <h3>অনুরোধ পাঠানোর পদ্ধতি</h3>
+            <h3>কি কি ডেটা সংরক্ষিত থাকতে পারে?</h3>
+            <p>আইনগত প্রয়োজনীয়তা ছাড়া অ্যাকাউন্ট ডিলিটের পর আমরা কোনো ব্যক্তিগত ডেটা সংরক্ষণ করি না। অ্যানোনিমাস ব্যবহারের পরিসংখ্যান (Analytics) সংরক্ষিত থাকতে পারে, যা দিয়ে আপনাকে শনাক্ত করা যাবে না।</p>
 
-            <p>
-                নিচের ফর্মে আপনার অ্যাকাউন্টের সঙ্গে ব্যবহৃত Google Account
-                email address লিখুন এবং deletion request নিশ্চিত করুন।
-            </p>
-
-            <div class="form-section">
-
-                <div class="field">
-                    <label for="emailBn">Google Account-এর ইমেইল</label>
-                    <input
-                        id="emailBn"
-                        type="email"
-                        placeholder="আপনার Google Account-এর ইমেইল"
-                    >
-                </div>
-
-                <div class="field">
-                    <label for="reasonBn">মুছে ফেলার কারণ — ঐচ্ছিক</label>
-                    <textarea
-                        id="reasonBn"
-                        placeholder="আপনি চাইলে কারণ লিখতে পারেন"
-                    ></textarea>
-                </div>
-
-                <label class="checkbox">
-                    <input type="checkbox" id="confirmBn">
-                    <span>
-                        আমি নিশ্চিত করছি যে আমি আমার Overtime Tracker BD
-                        অ্যাকাউন্ট এবং সংশ্লিষ্ট ডেটা স্থায়ীভাবে মুছে ফেলার
-                        অনুরোধ করছি।
-                    </span>
-                </label>
-
-                <button class="button" onclick="sendRequest('bn')">
-                    মুছে ফেলার অনুরোধ পাঠান
-                </button>
-
-            </div>
-
-            <div class="info-box">
-                <strong>প্রক্রিয়াকরণের সময়</strong>
-                <p>
-                    আপনার deletion request সর্বোচ্চ
-                    <strong>৭ কর্মদিবসের মধ্যে</strong> প্রক্রিয়া করা হবে।
-                </p>
-            </div>
-
-            <div class="info-box">
-                <strong>গুরুত্বপূর্ণ</strong>
-                <p>
-                    Overtime Tracker BD অ্যাকাউন্ট মুছে ফেললে আপনার
-                    Google Account মুছে যাবে না। আপনার Google Account
-                    Google-এর কাছেই থাকবে এবং এতে কোনো প্রভাব পড়বে না।
-                </p>
-            </div>
-
-            <div class="contact">
-                <strong>Deletion Request Support</strong>
-                <p>
-                    <a href="mailto:mahmud.apps.official@gmail.com">
-                        mahmud.apps.official@gmail.com
-                    </a>
-                </p>
-            </div>
-
+            <p>আপনার অনুরোধ যাচাই করার পর <strong>৩০ দিনের</strong> মধ্যে ডেটা মুছে ফেলা হবে।</p>
+            <p>কোনো প্রশ্ন থাকলে যোগাযোগ করুন: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></p>
         </div>
 
+        <!-- ================= ENGLISH CONTENT ================= -->
+        <div id="content-en" class="lang-content">
+            <h1>Account Deletion Request</h1>
+            <h2>Overtime Tracker BD</h2>
+            <p><strong>Developer:</strong> Tatisaki Labs</p>
 
-        <!-- ENGLISH -->
-        <div id="enContent">
+            <p>You can request the deletion of your account and all associated data from <strong>Overtime Tracker BD</strong> using either of the following methods:</p>
 
-            <h2>Account & Data Deletion Request</h2>
-
-            <p>
-                If you want to delete your Overtime Tracker BD account
-                and associated personal data, please follow the instructions
-                below to submit a deletion request.
-            </p>
-
-            <div class="info-box">
-                <strong>Google Sign-In</strong>
-                <p>
-                    Overtime Tracker BD uses Google Sign-In for account access.
-                    When submitting a deletion request, please provide the
-                    Google Account email address associated with your use
-                    of the app.
-                </p>
+            <div class="steps">
+                <h3>Method 1: Delete from within the App</h3>
+                <ol>
+                    <li>Open the Overtime Tracker BD app.</li>
+                    <li>Go to your <strong>Profile</strong> section.</li>
+                    <li>Tap on the <strong>Settings</strong> icon (gear icon) in the top right corner.</li>
+                    <li>Select <strong>"Delete Account"</strong>.</li>
+                    <li>Confirm the deletion request.</li>
+                </ol>
             </div>
 
-            <h3>What data may be deleted?</h3>
+            <div class="steps">
+                <h3>Method 2: Request via Email</h3>
+                <p>If you cannot access the app, you can submit a deletion request by emailing:</p>
+                <ul>
+                    <li>Email: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></li>
+                </ul>
+                <p>Please use the subject line "Account Deletion Request" and include the email address associated with your account.</p>
+            </div>
 
+            <h3>What Data Will Be Deleted?</h3>
             <ul>
-                <li>Account and profile information</li>
-                <li>Attendance and work records</li>
-                <li>Overtime records</li>
-                <li>Salary and earnings information</li>
-                <li>Other associated personal data</li>
+                <li>Your name, email address, and Google account information.</li>
+                <li>Your company/factory name, employee ID, grade, and job position.</li>
+                <li>All salary data (basic salary, allowances, bonuses).</li>
+                <li>All overtime records, piece rate data, and work history.</li>
             </ul>
 
-            <h3>How to submit a request</h3>
+            <h3>What Data May Be Kept?</h3>
+            <p>We do not retain any personal data after account deletion, except as required by law. Aggregated, anonymous usage statistics may be retained for analytics purposes, but these cannot be linked back to you.</p>
 
-            <p>
-                Enter the Google Account email address associated with your
-                Overtime Tracker BD account and confirm your deletion request
-                below.
-            </p>
-
-            <div class="form-section">
-
-                <div class="field">
-                    <label for="emailEn">Google Account Email</label>
-                    <input
-                        id="emailEn"
-                        type="email"
-                        placeholder="Enter your Google Account email"
-                    >
-                </div>
-
-                <div class="field">
-                    <label for="reasonEn">Reason for deletion — Optional</label>
-                    <textarea
-                        id="reasonEn"
-                        placeholder="You may provide a reason"
-                    ></textarea>
-                </div>
-
-                <label class="checkbox">
-                    <input type="checkbox" id="confirmEn">
-                    <span>
-                        I confirm that I want to permanently delete my
-                        Overtime Tracker BD account and associated data.
-                    </span>
-                </label>
-
-                <button class="button" onclick="sendRequest('en')">
-                    Submit Deletion Request
-                </button>
-
-            </div>
-
-            <div class="info-box">
-                <strong>Processing Time</strong>
-                <p>
-                    Your deletion request will be processed within
-                    <strong>7 business days</strong>.
-                </p>
-            </div>
-
-            <div class="info-box">
-                <strong>Important</strong>
-                <p>
-                    Deleting your Overtime Tracker BD account does not delete
-                    your Google Account. Your Google Account remains with
-                    Google and is not affected.
-                </p>
-            </div>
-
-            <div class="contact">
-                <strong>Deletion Request Support</strong>
-                <p>
-                    <a href="mailto:mahmud.apps.official@gmail.com">
-                        mahmud.apps.official@gmail.com
-                    </a>
-                </p>
-            </div>
-
+            <p>After verifying your request, we will process the deletion within <strong>30 days</strong>.</p>
+            <p>If you have any questions, contact us at: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></p>
         </div>
 
     </div>
 
     <div class="footer">
-        © <span id="year"></span> Tatisaki Labs · Overtime Tracker BD
+        &copy; 2026 Tatisaki Labs. All rights reserved.
     </div>
 
-</div>
-
-
-<script>
-
-    const emailAddress = "mahmud.apps.official@gmail.com";
-
-    function setLanguage(language) {
-
-        const bnContent = document.getElementById("bnContent");
-        const enContent = document.getElementById("enContent");
-
-        const bnBtn = document.getElementById("bnBtn");
-        const enBtn = document.getElementById("enBtn");
-
-        if (language === "bn") {
-            bnContent.classList.remove("hidden");
-            enContent.classList.add("hidden");
-
-            bnBtn.classList.add("active");
-            enBtn.classList.remove("active");
-
-            document.documentElement.lang = "bn";
-
-            localStorage.setItem("deletionPageLanguage", "bn");
-
-        } else {
-            bnContent.classList.add("hidden");
-            enContent.classList.remove("hidden");
-
-            enBtn.classList.add("active");
-            bnBtn.classList.remove("active");
-
-            document.documentElement.lang = "en";
-
-            localStorage.setItem("deletionPageLanguage", "en");
+    <!-- JavaScript for Language Toggle -->
+    <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.toggle-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('content-' + lang).classList.add('active');
+            document.getElementById('btn-' + lang).classList.add('active');
         }
-    }
-
-
-    function sendRequest(language) {
-
-        let email;
-        let reason;
-        let confirmed;
-        let subject;
-        let body;
-
-        if (language === "bn") {
-
-            email = document.getElementById("emailBn").value.trim();
-            reason = document.getElementById("reasonBn").value.trim();
-            confirmed = document.getElementById("confirmBn").checked;
-
-            if (!email) {
-                alert("অনুগ্রহ করে আপনার Google Account-এর ইমেইল ঠিকানা দিন।");
-                return;
-            }
-
-            if (!confirmed) {
-                alert("অনুগ্রহ করে deletion request নিশ্চিত করুন।");
-                return;
-            }
-
-            subject = "Account & Data Deletion Request - Overtime Tracker BD";
-
-            body =
-                "অ্যাকাউন্ট ও ডেটা মুছে ফেলার অনুরোধ\n\n" +
-                "Google Account Email: " + email + "\n\n" +
-                "মুছে ফেলার কারণ: " + (reason || "উল্লেখ করা হয়নি") + "\n\n" +
-                "আমি আমার Overtime Tracker BD অ্যাকাউন্ট এবং সংশ্লিষ্ট ডেটা মুছে ফেলার অনুরোধ করছি।";
-
-        } else {
-
-            email = document.getElementById("emailEn").value.trim();
-            reason = document.getElementById("reasonEn").value.trim();
-            confirmed = document.getElementById("confirmEn").checked;
-
-            if (!email) {
-                alert("Please enter your Google Account email address.");
-                return;
-            }
-
-            if (!confirmed) {
-                alert("Please confirm your deletion request.");
-                return;
-            }
-
-            subject = "Account & Data Deletion Request - Overtime Tracker BD";
-
-            body =
-                "Account & Data Deletion Request\n\n" +
-                "Google Account Email: " + email + "\n\n" +
-                "Reason for deletion: " + (reason || "Not provided") + "\n\n" +
-                "I request the deletion of my Overtime Tracker BD account and associated data.";
-        }
-
-        const mailto =
-            "mailto:" +
-            emailAddress +
-            "?subject=" +
-            encodeURIComponent(subject) +
-            "&body=" +
-            encodeURIComponent(body);
-
-        window.location.href = mailto;
-    }
-
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    const savedLanguage =
-        localStorage.getItem("deletionPageLanguage");
-
-    if (savedLanguage === "bn") {
-        setLanguage("bn");
-    } else {
-        setLanguage("en");
-    }
-
-</script>
-
+    </script>
 </body>
-  </html>
+</html>
