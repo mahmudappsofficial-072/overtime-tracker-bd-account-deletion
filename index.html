@@ -132,6 +132,11 @@
 <body>
 
 <div class="container">
+    
+    <!-- ⬇️ এখানে অটোমেটিক ডেট দেখানো হবে ⬇️ -->
+    <div id="lastUpdated" style="text-align: center; font-size: 12px; color: #6B7280; margin-bottom: 15px;"></div>
+    <!-- ⬆️ এখানে অটোমেটিক ডেট দেখানো হবে ⬆️ -->
+
     <div class="header">
         <h1 class="app-title">Overtime Tracker BD (ওভারটাইম ট্র্যাকার বিডি)</h1>
         <div class="app-id">Package ID: com.overtime.bd | Developer: Tatisaki Labs</div>
@@ -186,11 +191,24 @@
     </div>
 
     <div class="footer">
-        © 2026 Tatisaki Labs. All rights reserved. | In accordance with Google Play Policy.
+        © 2026 Tatisaki Labs. All rights reserved. | Account & Data Deletion Portal
     </div>
 </div>
 
 <script>
+// ⬇️ ডেট অটোমেটিক আপডেট করার স্ক্রিপ্ট ⬇️
+document.addEventListener("DOMContentLoaded", function() {
+    // ফাইলের শেষ আপডেটের তারিখ নেওয়া হচ্ছে
+    const lastModified = new Date(document.lastModified);
+    
+    // ডেট ফরম্যাট করা হচ্ছে (যেমন: October 13, 2026)
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = lastModified.toLocaleDateString('en-US', options);
+    
+    // উপরের ডিভে ডেটটি বসিয়ে দেওয়া হচ্ছে
+    document.getElementById("lastUpdated").innerText = "Last Updated: " + formattedDate;
+});
+
 function handleFormSubmit(event) {
     event.preventDefault();
     const email = document.getElementById('userEmail').value.trim();
