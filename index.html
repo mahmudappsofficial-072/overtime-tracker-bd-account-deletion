@@ -1,118 +1,219 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Deletion - Overtime Tracker BD</title>
+    <title>Account & Data Deletion Request - Overtime Tracker  BD</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
-        .header { background: #ffffff; padding: 15px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
-        .toggle-container { display: inline-flex; border-radius: 20px; overflow: hidden; border: 1px solid #ccc; }
-        .toggle-btn { padding: 8px 20px; border: none; cursor: pointer; background: #fff; font-weight: bold; font-size: 14px; transition: 0.3s; }
-        .toggle-btn.active { background: #1a2b4c; color: #fff; }
-        .container { max-width: 800px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        h1 { color: #1a2b4c; font-size: 22px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        h2 { color: #1a2b4c; font-size: 18px; margin-top: 25px; }
-        a { color: #007bff; text-decoration: none; word-break: break-all; }
-        a:hover { text-decoration: underline; }
-        .steps { background: #f9f9f9; padding: 15px; border-left: 5px solid #1a2b4c; margin: 20px 0; border-radius: 4px; }
-        ul, ol { padding-left: 20px; }
-        .lang-content { display: none; }
-        .lang-content.active { display: block; }
-        .footer { text-align: center; font-size: 12px; color: #777; margin-top: 20px; margin-bottom: 30px; }
+        :root {
+            --primary-color: #141F55;
+            --danger-color: #DC2626;
+            --text-main: #1F2937;
+            --text-muted: #4B5563;
+            --bg-light: #F9FAFB;
+            --card-bg: #FFFFFF;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 680px;
+            margin: 30px auto;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #E5E7EB;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 1px solid #E5E7EB;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+        }
+        .app-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 8px 0 4px 0;
+        }
+        .app-id {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 18px;
+            color: var(--primary-color);
+            margin-top: 24px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+        p, li {
+            font-size: 14.5px;
+            color: var(--text-muted);
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .notice-box {
+            background-color: #FEF2F2;
+            border: 1px solid #FCA5A5;
+            border-radius: 8px;
+            padding: 14px;
+            color: #991B1B;
+            font-size: 13.5px;
+            margin: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+        input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input[type="email"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .submit-btn {
+            background-color: var(--danger-color);
+            color: #FFFFFF;
+            border: none;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+        .submit-btn:hover {
+            background-color: #B91C1C;
+        }
+        .direct-email {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+        .direct-email a {
+            color: var(--primary-color);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #9CA3AF;
+            margin-top: 30px;
+            border-top: 1px solid #E5E7EB;
+            padding-top: 15px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ভাষা পরিবর্তনের বাটন -->
+<div class="container">
     <div class="header">
-        <div class="toggle-container">
-            <button id="btn-bn" class="toggle-btn active" onclick="switchLang('bn')">বাংলা</button>
-            <button id="btn-en" class="toggle-btn" onclick="switchLang('en')">English</button>
-        </div>
+        <h1 class="app-title">Overtime Tracker BD (ওভারটাইম ট্র্যাকার বিডি)</h1>
+        <div class="app-id">Package ID: com.overtime.bd | Developer: Tatisaki Labs</div>
+        <p style="margin: 0; font-size: 15px; font-weight: 600; color: #374151;">Account & Cloud Data Deletion Portal</p>
     </div>
 
-    <div class="container">
-        
-        <!-- ================= বাংলা কোড ================= -->
-        <div id="content-bn" class="lang-content active">
-            <h1>অ্যাকাউন্ট ডিলিটের অনুরোধ</h1>
-            <h2>Overtime Tracker BD</h2>
-            <p><strong>ডেভেলপার:</strong> Tatisaki Labs</p>
+    <p>
+        In compliance with <strong>Google Play User Data & Account Deletion Policies</strong>, users of <strong>Overtime Tracker BD</strong> have the complete right to request the permanent deletion of their account and all associated cloud-stored records.
+    </p>
 
-            <p>আপনি ইমেইলের মাধ্যমে <strong>Overtime Tracker BD</strong> অ্যাপ থেকে আপনার অ্যাকাউন্ট এবং সংশ্লিষ্ট সকল ডেটা মুছে ফেলার অনুরোধ করতে পারেন।</p>
+    <div class="notice-box">
+        <strong>⚠️ Warning:</strong> Account deletion is permanent and irreversible. Once processed, your cloud backup will be wiped, and your past overtime or salary calculations cannot be restored.
+    </div>
 
-            <div class="steps">
-                <h3>অনুরোধ করার নিয়ম:</h3>
-                <p>নিচের ইমেইল অ্যাড্রেসে একটি মেইল পাঠান:</p>
-                <ul>
-                    <li>ইমেইল: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></li>
-                </ul>
-                <p>মেইলের সাবজেক্টে <strong>"Account Deletion Request"</strong> লিখুন এবং আপনার অ্যাকাউন্টের সাথে যুক্ত ইমেইল অ্যাড্রেসটি উল্লেখ করুন।</p>
-            </div>
+    <h2>1. Data That Will Be Deleted</h2>
+    <p>Upon receiving and verifying your request, the following records stored on our Google Firebase Firestore backend will be permanently purged:</p>
+    <ul>
+        <li><strong>User Profile:</strong> Name, Company Name, Worker ID, Designation, Grade, and Settings.</li>
+        <li><strong>Salary Structure:</strong> Gross Salary, Basic Salary, Allowances, Attendance Bonus, and Custom Rates.</li>
+        <li><strong>Overtime & Shift Logs:</strong> All daily overtime hours, notes, and shift entries.</li>
+        <li><strong>Piece Rate Records:</strong> All piece-rate products, counts, and amounts.</li>
+        <li><strong>Authentication Identifier:</strong> Google Sign-In UID link associated with your account.</li>
+    </ul>
 
-            <h3>কি কি ডেটা মুছে ফেলা হবে?</h3>
-            <ul>
-                <li>আপনার নাম, ইমেইল এবং গুগল অ্যাকাউন্টের তথ্য।</li>
-                <li>কোম্পানি/ফ্যাক্টরির নাম, আইডি, গ্রেড এবং পদবি।</li>
-                <li>মূল বেতন, ভাতা এবং বোনাসের মতো সকল আর্থিক তথ্য।</li>
-                <li>ওভারটাইম রেকর্ড, পিস রেট এবং কাজের ইতিহাস।</li>
-            </ul>
+    <h2>2. Processing Timeline & Retention</h2>
+    <p>
+        After verification, your account and associated cloud data will be permanently deleted within <strong>7 business days</strong>, subject to applicable legal requirements. No residual personal or financial data is retained on our cloud servers. If you are also using the app locally on your device, simply click <em>"Sign Out"</em> in the app's Profile screen to instantly wipe locally cached records.
+    </p>
 
-            <h3>কি কি ডেটা সংরক্ষিত থাকতে পারে?</h3>
-            <p>আইনগত প্রয়োজনীয়তা ছাড়া অ্যাকাউন্ট ডিলিটের পর আমরা কোনো ব্যক্তিগত ডেটা সংরক্ষণ করি না।</p>
+    <h2>3. Submit Deletion Request via Email</h2>
+    <p>Please enter the Google Account Email address you used to sign into the Overtime Tracker BD app:</p>
 
-            <p>আপনার অনুরোধ যাচাই করার পর <strong>৭ দিনের</strong> মধ্যে ডেটা মুছে ফেলা হবে।</p>
-            <p>কোনো প্রশ্ন থাকলে যোগাযোগ করুন: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></p>
+    <form onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+            <label for="userEmail">Your Registered Google Account Email *</label>
+            <input type="email" id="userEmail" placeholder="e.g. yourname@gmail.com" required>
         </div>
 
-        <!-- ================= English Content ================= -->
-        <div id="content-en" class="lang-content">
-            <h1>Account Deletion Request</h1>
-            <h2>Overtime Tracker BD</h2>
-            <p><strong>Developer:</strong> Tatisaki Labs</p>
-
-            <p>You can request the deletion of your account and all associated data from <strong>Overtime Tracker BD</strong> via email.</p>
-
-            <div class="steps">
-                <h3>How to Request:</h3>
-                <p>Send an email to the following address:</p>
-                <ul>
-                    <li>Email: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></li>
-                </ul>
-                <p>Please use the subject line <strong>"Account Deletion Request"</strong> and include the email address associated with your account.</p>
-            </div>
-
-            <h3>What Data Will Be Deleted?</h3>
-            <ul>
-                <li>Your name, email address, and Google account information.</li>
-                <li>Your company/factory name, employee ID, grade, and job position.</li>
-                <li>All salary data (basic salary, allowances, bonuses).</li>
-                <li>All overtime records, piece rate data, and work history.</li>
-            </ul>
-
-            <h3>What Data May Be Kept?</h3>
-            <p>What data may be retained?, Except where retention is required by law, we do not retain any personal data after an account deletion request has been completed.</p>
-
-            <p>After verifying your request, we will process the deletion within <strong>7 days</strong>.</p>
-            <p>If you have any questions, contact us at: <a href="mailto:mahmudappsofficial-072@gmail.com">mahmudappsofficial-072@gmail.com</a></p>
+        <div class="form-group">
+            <label for="userReason">Reason for Deletion (Optional)</label>
+            <textarea id="userReason" rows="3" placeholder="Tell us why you wish to delete your data (optional)..."></textarea>
         </div>
 
+        <button type="submit" class="submit-btn">Send Deletion Request</button>
+    </form>
+
+    <div class="direct-email">
+        Or send an email directly to: 
+        <a href="mailto:supporttatisakilabs@gmail.com?subject=Data%20Deletion%20Request%20-%20Overtime%20Tracker%20BD&body=Hello%20Developer,%0A%0APlease%20permanently%20delete%20my%20account%20and%20all%20cloud%20data%20associated%20with%20my%20email%20address%20from%20Overtime%20Tracker%20BD.%0A%0AMy%20Registered%20Email:%20[ENTER%20YOUR%20EMAIL%20HERE]">
+            supporttatisakilabs@gmail.com
+        </a>
     </div>
 
     <div class="footer">
-        &copy; 2026 Tatisaki Labs. All rights reserved.
+        © 2026 Tatisaki Labs. All rights reserved. | In accordance with Google Play Policy.
     </div>
+</div>
 
-    <!-- ভাষা পরিবর্তনের জাভাস্ক্রিপ্ট -->
-    <script>
-        function switchLang(lang) {
-            document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.toggle-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById('content-' + lang).classList.add('active');
-            document.getElementById('btn-' + lang).classList.add('active');
-        }
-    </script>
+<script>
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const email = document.getElementById('userEmail').value.trim();
+    const reason = document.getElementById('userReason').value.trim();
+
+    if (!email) {
+        alert("Please enter your registered Google account email.");
+        return;
+    }
+
+    const subject = encodeURIComponent("Data Deletion Request - Overtime Tracker BD (" + email + ")");
+    const bodyText = encodeURIComponent(
+        "Hello Developer (Tatisaki Labs),\n\n" +
+        "I request the permanent deletion of my account and all associated cloud data for the app Overtime Tracker BD (com.overtime.bd).\n\n" +
+        "Registered Google Email: " + email + "\n" +
+        "Reason: " + (reason ? reason : "Not specified") + "\n\n" +
+        "Please confirm once the data has been purged from Firebase Firestore.\n\n" +
+        "Thank you."
+    );
+
+    window.location.href = "mailto:supporttatisakilabs@gmail.com?subject=" + subject + "&body=" + bodyText;
+}
+</script>
+
 </body>
 </html>
